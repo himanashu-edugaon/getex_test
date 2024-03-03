@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "977115377033",
+    "project_id": "flutterfirstproject-9b992",
+    "storage_bucket": "flutterfirstproject-9b992.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:977115377033:android:dd4be255cf5c64eb6e4558",
+        "android_client_info": {
+          "package_name": "com.edugaon.getex_test"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBH4FcWN-B9_DHZQjUq_bHyockUzrQbPa8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:977115377033:android:84507999c9664b346e4558",
+        "android_client_info": {
+          "package_name": "com.example.firebase_first_project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBH4FcWN-B9_DHZQjUq_bHyockUzrQbPa8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
