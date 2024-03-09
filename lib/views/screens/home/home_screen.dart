@@ -10,7 +10,6 @@ import 'package:getex_test/views/screens/contacts/update_contacts.dart';
 import 'package:getex_test/views/screens/history/history_screens.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import 'add_contact_screen.dart';
 
 

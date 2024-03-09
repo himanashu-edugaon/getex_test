@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart' as flutter_contacts;
 import 'package:getex_test/controllers/contact_controller.dart';
 import 'package:getex_test/views/screens/home/Buttom_navation.dart';
-import 'package:getex_test/views/screens/home/home_screen.dart';
 import 'package:image_picker/image_picker.dart';
 
 
@@ -38,7 +37,6 @@ class _UpdatedContactScreenState extends State<UpdatedContactScreen> {
   void initState() {
     super.initState();
 
-    // Initialize controllers with contact data
     final contact = widget.contacts[widget.index];
     _firstNameController = TextEditingController(text: contact.name.first ?? '');
     _middleNameController = TextEditingController(text: contact.name.middle ?? '');
@@ -161,7 +159,7 @@ class _UpdatedContactScreenState extends State<UpdatedContactScreen> {
       );
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => HomeScreen()),
+        MaterialPageRoute(builder: (context) => const MyHomePage()),
       );
     } catch (e) {
       print('Error updating contact: $e');
