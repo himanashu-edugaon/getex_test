@@ -56,7 +56,7 @@ class _UpdatedContactScreenState extends State<UpdatedContactScreen> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(height: 60),
+              const SizedBox(height: 40),
               GestureDetector(
                 onTap: _pickImage,
                 child: CircleAvatar(
@@ -75,7 +75,38 @@ class _UpdatedContactScreenState extends State<UpdatedContactScreen> {
               const SizedBox(height: 30),
               buildElevatedButton("Update Contact", Colors.tealAccent, _updateContact),
               const SizedBox(height: 20),
-              buildElevatedButton("Delete Contact", Colors.deepOrange, _deleteContact),
+              //buildElevatedButton("Delete Contact", Colors.deepOrange, _deleteContact),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.deepOrange,
+                  elevation: 5,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                ),
+                onPressed: () => showDialog<String>(
+                  context: context,
+                  builder: (BuildContext context) => AlertDialog(
+                    title: Text("Alert....!"),
+                    content: Text("Sure You Wants to Delete"),
+                    actions: <Widget>[
+                      TextButton(
+                          onPressed: (){
+                            Navigator.pop(context);
+                          },
+                          child: Text("No")),
+                      TextButton(
+                          onPressed: (){
+                            _deleteContact();
+                          },
+                          child: Text("Yes")),
+                    ],
+                  ),
+                ),
+                child: Text("Delete Contact",
+                  style: const TextStyle(fontSize: 20, color: Colors.black87),
+                ),
+              ),
             ],
           ),
         ],
@@ -101,7 +132,8 @@ class _UpdatedContactScreenState extends State<UpdatedContactScreen> {
   Widget buildElevatedButton(String text, Color color, Function() onPressed) {
     return Padding(
       padding: const EdgeInsets.all(10),
-      child: ElevatedButton(
+      child:
+      ElevatedButton(
         style: ElevatedButton.styleFrom(
           backgroundColor: color,
           elevation: 2,
