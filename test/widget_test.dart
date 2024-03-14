@@ -8,7 +8,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:getex_test/main.dart';
-import 'package:getex_test/views/screens/home/widgets/Buttom_navation.dart';
+import 'package:getex_test/views/screens/home/widgets/bottom_navigation_screen.dart';
 
 
 void main() {

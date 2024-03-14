@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:getex_test/views/screens/contacts/contacts_screen.dart';
 import 'package:getex_test/views/screens/contacts/recent_call_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../contacts/contacts_screen.dart';
 
 class BottomNavigationWidget extends StatefulWidget {
   const BottomNavigationWidget({super.key,});
@@ -36,7 +36,7 @@ class _BottomNavigationWidgetState extends State<BottomNavigationWidget> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.keyboard_alt_outlined),
-            label: 'DailerPad',
+            label: 'DialerPad',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.history_toggle_off_sharp),
@@ -44,7 +44,7 @@ class _BottomNavigationWidgetState extends State<BottomNavigationWidget> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.contacts),
-            label: 'Contact',
+            label: 'Contacts',
           ),
         ],
         currentIndex: _selectedIndex,

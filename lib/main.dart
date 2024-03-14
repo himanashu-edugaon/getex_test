@@ -3,7 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:getex_test/views/screens/auth/google_auth.dart';
-import 'package:getex_test/views/screens/home/widgets/Buttom_navation.dart';
+import 'package:getex_test/views/screens/home/widgets/bottom_navigation_screen.dart';
 
 import 'firebase_options.dart';
 
@@ -15,9 +15,9 @@ void main() async {
   User? currentUser = FirebaseAuth.instance.currentUser;
   Widget initialRoute;
   if (currentUser != null) {
-    initialRoute = BottomNavigationWidget();
+    initialRoute = const BottomNavigationWidget();
   } else {
-    initialRoute = GoogleAuth();
+    initialRoute = const GoogleAuth();
   }
 
     runApp(ContactApp(initialRoute: initialRoute));

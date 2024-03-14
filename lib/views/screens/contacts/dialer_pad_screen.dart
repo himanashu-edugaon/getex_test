@@ -1,34 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:getex_test/controllers/calling_pad_controller/calling_pad_controller.dart';
 
 class DialerPadScreen extends StatelessWidget {
   final String phoneNumber;
 
-  const DialerPadScreen({Key? key, required this.phoneNumber}) : super(key: key);
+  DialerPadScreen({super.key, required this.phoneNumber});
+  final PadController padsController = PadController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Dialer Pad'),
+        title: const Text('Dialer Pad'),
       ),
       body: Center(
         child: ElevatedButton(
           onPressed: () {
-            _launchDialer(phoneNumber);
+            padsController.launchDialer(phoneNumber);
           },
-          child: Text('Open Dialer Pad'),
+          child: const Text('Open Dialer Pad'),
         ),
       ),
     );
   }
 
-  void _launchDialer(String phoneNumber) async {
-    final url = 'tel:$phoneNumber';
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
+
 }

@@ -1,9 +1,9 @@
 import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart' as flutter_contacts;
 import 'package:getex_test/controllers/contact_controller.dart';
-import 'package:getex_test/views/screens/home/widgets/Buttom_navation.dart';
+import 'package:getex_test/views/screens/home/widgets/app_widgets.dart';
+import 'package:getex_test/views/screens/home/widgets/bottom_navigation_screen.dart';
 import 'package:image_picker/image_picker.dart';
 
 
@@ -14,12 +14,12 @@ class UpdatedContactScreen extends StatefulWidget {
   final Uint8List? userImage;
 
   const UpdatedContactScreen({
-    Key? key,
+    super.key,
     required this.contacts,
     required this.index,
     required this.id,
     required this.userImage,
-  }) : super(key: key);
+  });
 
   @override
   _UpdatedContactScreenState createState() => _UpdatedContactScreenState();
@@ -32,16 +32,17 @@ class _UpdatedContactScreenState extends State<UpdatedContactScreen> {
   late TextEditingController _numberController;
   Uint8List? _images;
   var contactController = ContactController();
+  var appWidgets = AppWidget();
 
   @override
   void initState() {
     super.initState();
 
     final contact = widget.contacts[widget.index];
-    _firstNameController = TextEditingController(text: contact.name.first ?? '');
-    _middleNameController = TextEditingController(text: contact.name.middle ?? '');
-    _lastNameController = TextEditingController(text: contact.name.last ?? '');
-    _numberController = TextEditingController(text: contact.phones.first.number ?? '');
+    _firstNameController = TextEditingController(text: contact.name.first);
+    _middleNameController = TextEditingController(text: contact.name.middle);
+    _lastNameController = TextEditingController(text: contact.name.last);
+    _numberController = TextEditingController(text: contact.phones.first.number);
   }
 
   @override
@@ -49,6 +50,44 @@ class _UpdatedContactScreenState extends State<UpdatedContactScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Update Contact'),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 10.0),
+            child: Row(
+            children: [
+              ElevatedButton(
+                  onPressed: (){
+                _updateContact();
+              },style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.blue)
+              ), child: const Text("Save",style: TextStyle(color: Colors.black),)),
+              const SizedBox(width: 6,),
+              IconButton(icon: const Icon(Icons.delete),color: Colors.red,
+                onPressed: () {
+                  showDialog<String>(
+                    context: context,
+                    builder: (BuildContext context) => AlertDialog(
+                      title: const Text("Delete Contact?"),
+                      content: const Text("This contact will be permanently deleted from your device"),
+                      actions: <Widget>[
+                        TextButton(
+                            onPressed: (){
+                              Navigator.pop(context);
+                            },
+                            child: const Text("Cancel")),
+                        TextButton(
+                            onPressed: (){
+                              _deleteContact();
+                            },
+                            child: const Text("Delete")),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ],
+                    ),
+          )],
       ),
       body: ListView(
         padding: const EdgeInsets.all(20),
@@ -64,49 +103,14 @@ class _UpdatedContactScreenState extends State<UpdatedContactScreen> {
                   backgroundImage: _images != null || widget.userImage != null
                       ? MemoryImage(_images ?? widget.userImage!): null,
                   child: _images == null && widget.userImage == null
-                      ? Icon(Icons.add_a_photo_outlined):null,
+                      ? const Icon(Icons.add_a_photo_outlined):null,
                 ),
               ),
               const SizedBox(height: 20),
-              buildTextFormField(_firstNameController, "Enter Your First Name"),
-              buildTextFormField(_middleNameController, "This contact has no middle name"),
-              buildTextFormField(_lastNameController, "Enter Your Last Name"),
-              buildTextFormField(_numberController, "Enter Your Number"),
-              const SizedBox(height: 30),
-              buildElevatedButton("Update Contact", Colors.tealAccent, _updateContact),
-              const SizedBox(height: 20),
-              //buildElevatedButton("Delete Contact", Colors.deepOrange, _deleteContact),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.deepOrange,
-                  elevation: 5,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                ),
-                onPressed: () => showDialog<String>(
-                  context: context,
-                  builder: (BuildContext context) => AlertDialog(
-                    title: Text(""),
-                    content: Text("Sure You Wants to Delete"),
-                    actions: <Widget>[
-                      TextButton(
-                          onPressed: (){
-                            Navigator.pop(context);
-                          },
-                          child: Text("No")),
-                      TextButton(
-                          onPressed: (){
-                            _deleteContact();
-                          },
-                          child: Text("Yes")),
-                    ],
-                  ),
-                ),
-                child: Text("Delete Contact",
-                  style: const TextStyle(fontSize: 20, color: Colors.black87),
-                ),
-              ),
+              appWidgets.buildTextFormField(_firstNameController, "Enter Your First Name"),
+              appWidgets.buildTextFormField(_middleNameController, "This contact has no middle name"),
+              appWidgets.buildTextFormField(_lastNameController, "Enter Your Last Name"),
+              appWidgets.buildTextFormField(_numberController, "Enter Your Number"),
             ],
           ),
         ],
@@ -114,41 +118,6 @@ class _UpdatedContactScreenState extends State<UpdatedContactScreen> {
     );
   }
 
-  Widget buildTextFormField(TextEditingController controller, String hintText) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 20, right: 20, top: 15),
-      child: TextFormField(
-        decoration: InputDecoration(
-          hintText: hintText,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-        ),
-        controller: controller,
-      ),
-    );
-  }
-
-  Widget buildElevatedButton(String text, Color color, Function() onPressed) {
-    return Padding(
-      padding: const EdgeInsets.all(10),
-      child:
-      ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: color,
-          elevation: 2,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15),
-          ),
-        ),
-        onPressed: onPressed,
-        child: Text(
-          text,
-          style: const TextStyle(fontSize: 20, color: Colors.black87),
-        ),
-      ),
-    );
-  }
 
   Future<void> _pickImage() async {
     try {
@@ -210,7 +179,7 @@ class _UpdatedContactScreenState extends State<UpdatedContactScreen> {
       );
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => BottomNavigationWidget()),
+        MaterialPageRoute(builder: (context) => const BottomNavigationWidget()),
       );
     } catch (e) {
       print("Error: $e");
