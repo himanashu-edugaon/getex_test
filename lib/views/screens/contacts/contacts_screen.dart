@@ -1,12 +1,13 @@
 import 'dart:math';
 import 'package:call_log/call_log.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/contact.dart' as flutter_contacts;
 import 'package:flutter_contacts/contact.dart';
 import 'package:flutter_contacts/flutter_contacts.dart' as flutter_contacts;
 import 'package:getex_test/controllers/contact_controller.dart';
-import 'package:getex_test/views/screens/contacts/update_contacts.dart';
+import 'package:getex_test/views/screens/contacts/update_contacts_screen.dart';
 import 'package:getex_test/views/screens/history/history_screens.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -51,9 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     originalContacts = [];
     for (var contact in allContacts) {
-      if (contact.displayName != null &&
-          contact.phones != null &&
-          contact.phones!.isNotEmpty) {
+      if (contact.phones.isNotEmpty) {
         originalContacts.add(contact);
       }
     }
@@ -68,8 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
     List<flutter_contacts.Contact> searchResult =
     originalContacts.where((contact) {
       final nameMatches =
-          contact.displayName.toLowerCase().contains(query.toLowerCase()) ??
-              false;
+          contact.displayName.toLowerCase().contains(query.toLowerCase()) ?? false;
       final phoneMatches = contact.phones.any((phone) =>
           phone!.number.toLowerCase().contains(query.toLowerCase())) ??
           false;
@@ -80,7 +78,7 @@ class _HomeScreenState extends State<HomeScreen> {
       if (query.isEmpty) {
         contacts = originalContacts
             .where((contact) =>
-        contact.displayName!.isNotEmpty && contact.phones!.isNotEmpty)
+        contact.displayName.isNotEmpty && contact.phones!.isNotEmpty)
             .toList();
       } else {
         contacts = searchResult;
@@ -115,18 +113,17 @@ class _HomeScreenState extends State<HomeScreen> {
             controller: searchController,
             decoration: const InputDecoration(
                 hintText: "Search name && number",
-             )
+             ),
       ),
         ),
       ),
       body: isLoading
           ? const Center(
-        child: CircularProgressIndicator(),
+        child: CupertinoActivityIndicator(radius: 12,),
       )
           : FutureBuilder(
           future: ContactController().getAllContacts(),
           builder: (c, snap) {
-            var data = snap.data ?? List<Contact>.empty();
             return ListView.builder(
               itemCount: contacts.length,
               itemBuilder: (context, index) {
@@ -155,7 +152,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           color: const Color(0xff262626),
                         ),
                         child: Text(
-                          contact.displayName?.isNotEmpty ?? false
+                          contact.displayName.isNotEmpty ?? false
                               ? contact.displayName![0]
                               : "DF",
                           style: TextStyle(
@@ -168,7 +165,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       title: Text(
-                        contact.displayName ?? "No Name",
+                        contact.displayName,
                         style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
@@ -178,7 +175,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     trailing: TextButton(
                       onPressed: () {
-                       _launchPhone(contact.phones!.first.number ?? "");
+                       _launchPhone(contact.phones.first.number);
                      //    Navigator.push(
                      //      context,
                      //      MaterialPageRoute(
@@ -212,7 +209,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             TextButton(
                               onPressed: () {
                                 // Video call action
-                                _launchMessage(contact.phones!.first.number ?? "");
+                                _launchMessage(contact.phones.first.number);
                               },
                               child: const Column(
                                 children: <Widget>[
@@ -227,7 +224,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             TextButton(
                               onPressed: () {
-                                String phoneNumber = contact.phones!.first.number ?? "";
+                                String phoneNumber = contact.phones.first.number;
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -251,7 +248,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             TextButton(
                               onPressed: () {
-                                getCallLogs(contact.phones!.first.number ?? "");
+                                getCallLogs(contact.phones.first.number ?? "");
                                 int indexOfContact =
                                     index; // Get the index of the current contact
                                 Navigator.push(
@@ -274,7 +271,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     padding:
                                     EdgeInsets.symmetric(vertical: 1.0),
                                   ),
-                                  Text("Update"),
+                                  Text("Save"),
                                 ],
                               ),
                             ),

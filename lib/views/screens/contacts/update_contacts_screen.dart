@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart' as flutter_contacts;
 import 'package:getex_test/controllers/contact_controller.dart';
-import 'package:getex_test/views/screens/home/Buttom_navation.dart';
+import 'package:getex_test/views/screens/home/widgets/Buttom_navation.dart';
 import 'package:image_picker/image_picker.dart';
 
 
@@ -87,7 +87,7 @@ class _UpdatedContactScreenState extends State<UpdatedContactScreen> {
                 onPressed: () => showDialog<String>(
                   context: context,
                   builder: (BuildContext context) => AlertDialog(
-                    title: Text("Alert....!"),
+                    title: Text(""),
                     content: Text("Sure You Wants to Delete"),
                     actions: <Widget>[
                       TextButton(
@@ -191,7 +191,7 @@ class _UpdatedContactScreenState extends State<UpdatedContactScreen> {
       );
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const MyHomePage()),
+        MaterialPageRoute(builder: (context) => const BottomNavigationWidget()),
       );
     } catch (e) {
       print('Error updating contact: $e');
@@ -210,7 +210,7 @@ class _UpdatedContactScreenState extends State<UpdatedContactScreen> {
       );
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => MyHomePage()),
+        MaterialPageRoute(builder: (context) => BottomNavigationWidget()),
       );
     } catch (e) {
       print("Error: $e");

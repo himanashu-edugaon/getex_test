@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:getex_test/views/screens/home/recent_call_screen.dart';
+import 'package:getex_test/views/screens/contacts/recent_call_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'home_screen.dart';
+import '../../contacts/contacts_screen.dart';
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key});
+class BottomNavigationWidget extends StatefulWidget {
+  const BottomNavigationWidget({super.key,});
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _BottomNavigationWidgetState createState() => _BottomNavigationWidgetState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _BottomNavigationWidgetState extends State<BottomNavigationWidget> {
   int _selectedIndex = 1;
   var screens = [
-    RecentCallScreen(),
-    RecentCallScreen(),
-    HomeScreen(),
+    const RecentCallScreen(),
+    const RecentCallScreen(),
+    const HomeScreen(),
     Container()
   ];
 
@@ -52,7 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
         onTap: (index) {
           _onItemTapped(index);
           if(_selectedIndex == 0){
-            _launchDialer("");
+            _launchContactDialerPad("");
           }
         },
       ),
@@ -60,7 +60,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-void _launchDialer(String phoneNumber) async {
+void _launchContactDialerPad(String phoneNumber) async {
   final url = 'tel:$phoneNumber';
   if (await canLaunch(url)) {
     await launch(url);

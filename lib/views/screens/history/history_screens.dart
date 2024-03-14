@@ -1,7 +1,6 @@
-import 'dart:math';
+
 import 'package:call_log/call_log.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 
 class HistoryScreen extends StatefulWidget {
@@ -73,7 +72,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                 String formattedDate = '${callDate.year}-${callDate.month}-${callDate.day}';
                 return ListTile(
                   leading: Icon(iconData),
-                  title:  Text('$callTextType',style: TextStyle(fontSize: 17),),
+                  title:  Text(callTextType,style: const TextStyle(fontSize: 17),),
                   //title: Text(call.name ?? 'Unknown'),
                   subtitle:  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -95,14 +94,5 @@ class _HistoryScreenState extends State<HistoryScreen> {
         },
       ),
     );
-  }
-}
-
-void _launchPhone(String phoneNumber) async {
-  final Uri uri = Uri(scheme: 'tel', path: phoneNumber);
-  if (await canLaunch(uri.toString())) {
-    await launch(uri.toString());
-  } else {
-    throw 'Could not launch $phoneNumber';
   }
 }

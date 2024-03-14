@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:call_log/call_log.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -35,7 +36,7 @@ class _RecentCallScreenState extends State<RecentCallScreen> {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
-              child: CircularProgressIndicator(),
+              child: CupertinoActivityIndicator(radius: 12,),
             );
           } else if (snapshot.hasError) {
             return Center(

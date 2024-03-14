@@ -4,7 +4,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:contacts_service/contacts_service.dart';
 import 'package:image_picker/image_picker.dart';
-import 'Buttom_navation.dart';
+import '../home/widgets/Buttom_navation.dart';
 
 class AddContactScreen extends StatefulWidget {
   @override
@@ -101,13 +101,10 @@ class _AddContactScreenState extends State<AddContactScreen> {
 
         if (_image != null && _image!.isNotEmpty) {
           try {
-            // Convert the image to base64 string
             String base64Image = base64Encode(_image!);
 
-            // Decode the base64 string back to bytes
             Uint8List imageBytes = base64Decode(base64Image);
 
-            // Attach the image bytes to the contact's avatar
             newContact.avatar = imageBytes;
           } catch (e) {
             print('Error encoding/decoding image: $e');
@@ -124,7 +121,7 @@ class _AddContactScreenState extends State<AddContactScreen> {
           SnackBar(content: Text('Contact added successfully')),
         );
 
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MyHomePage()));
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BottomNavigationWidget()));
 
         _nameController.clear();
         _phoneController.clear();
@@ -137,7 +134,6 @@ class _AddContactScreenState extends State<AddContactScreen> {
         );
       }
     } catch (e) {
-      print('Error adding contact: $e');
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Error adding contact')),
       );

@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:getex_test/views/screens/home/Buttom_navation.dart';
+import 'package:getex_test/views/screens/home/widgets/Buttom_navation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 
@@ -67,7 +67,7 @@ class _GoogleAuthState extends State<GoogleAuth> {
     UserCredential users = await FirebaseAuth.instance.signInWithCredential(credential);
     print(users.user?.displayName);
     if(users.user != null){
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MyHomePage(),));
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BottomNavigationWidget(),));
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Google Signing Successful")));
     }
     else{

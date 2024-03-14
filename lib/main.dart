@@ -3,7 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:getex_test/views/screens/auth/google_auth.dart';
-import 'package:getex_test/views/screens/home/Buttom_navation.dart';
+import 'package:getex_test/views/screens/home/widgets/Buttom_navation.dart';
 
 import 'firebase_options.dart';
 
@@ -15,25 +15,24 @@ void main() async {
   User? currentUser = FirebaseAuth.instance.currentUser;
   Widget initialRoute;
   if (currentUser != null) {
-    initialRoute = MyHomePage();
+    initialRoute = BottomNavigationWidget();
   } else {
     initialRoute = GoogleAuth();
   }
 
-    runApp(MyApp(initialRoute: initialRoute));
+    runApp(ContactApp(initialRoute: initialRoute));
   }
 
-class MyApp extends StatelessWidget {
-  final initialRoute;
+class ContactApp extends StatelessWidget {
+  final Widget initialRoute ;
 
-  const MyApp({Key? key, required this.initialRoute}) : super(key: key);
+  const ContactApp({super.key, required this.initialRoute});
 
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       builder: (context, child) => MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: "Flutter Demo",
         theme: ThemeData(primarySwatch: Colors.blue),
         home: initialRoute,
         themeMode: ThemeMode.dark,
