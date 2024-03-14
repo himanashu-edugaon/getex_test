@@ -4,7 +4,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:contacts_service/contacts_service.dart';
 import 'package:image_picker/image_picker.dart';
-import '../home/widgets/Buttom_navation.dart';
+import '../home/widgets/bottom_navigation_screen.dart';
 
 class AddContactScreen extends StatefulWidget {
   @override

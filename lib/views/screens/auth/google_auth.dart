@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:getex_test/views/screens/home/widgets/Buttom_navation.dart';
+import 'package:getex_test/views/screens/home/widgets/bottom_navigation_screen.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 
@@ -18,7 +18,7 @@ class _GoogleAuthState extends State<GoogleAuth> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text("Google Signin"),
+        title: const Text("Google Signing"),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -41,7 +41,7 @@ class _GoogleAuthState extends State<GoogleAuth> {
                       width: 30,
                       height: 40,
                     ),
-                    label: Text(
+                    label: const Text(
                       "Sign in with google",
                       style: TextStyle(color: Colors.white,fontSize: 20),
                     ),
@@ -67,11 +67,11 @@ class _GoogleAuthState extends State<GoogleAuth> {
     UserCredential users = await FirebaseAuth.instance.signInWithCredential(credential);
     print(users.user?.displayName);
     if(users.user != null){
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BottomNavigationWidget(),));
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Google Signing Successful")));
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const BottomNavigationWidget(),));
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Google Signing Successful")));
     }
     else{
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Google Signing Failed")));
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text("Google Signing Failed")));
       print("failed Google Signing");
     }
   }

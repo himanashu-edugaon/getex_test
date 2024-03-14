@@ -1,12 +1,11 @@
 import 'dart:math';
-
 import 'package:call_log/call_log.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:getex_test/controllers/calling_pad_controller/calling_pad_controller.dart';
 
 class RecentCallScreen extends StatefulWidget {
-  const RecentCallScreen({Key? key}) : super(key: key);
+  const RecentCallScreen({super.key});
 
   @override
   State<RecentCallScreen> createState() => _RecentCallScreenState();
@@ -15,6 +14,7 @@ class RecentCallScreen extends StatefulWidget {
 class _RecentCallScreenState extends State<RecentCallScreen> {
   late Future<Iterable<CallLogEntry>> _callLogEntries;
 
+  late PadController padsController = PadController();
   @override
   void initState() {
     super.initState();
@@ -29,13 +29,13 @@ class _RecentCallScreenState extends State<RecentCallScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Recently Call'),
+        title: const Text('Recently Call'),
       ),
       body: FutureBuilder<Iterable<CallLogEntry>>(
         future: _callLogEntries,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
+            return const Center(
               child: CupertinoActivityIndicator(radius: 12,),
             );
           } else if (snapshot.hasError) {
@@ -87,7 +87,7 @@ class _RecentCallScreenState extends State<RecentCallScreen> {
                   subtitle: Text(call.number ?? 'Unknown number'),
                   trailing: TextButton(
                     onPressed: () {
-                      _launchPhone(call.number ?? "");
+                      padsController.launchPhone(call.number ?? "");
                     },
                     child: const Column(
                       children: <Widget>[
@@ -114,11 +114,3 @@ class _RecentCallScreenState extends State<RecentCallScreen> {
   }
 }
 
-void _launchPhone(String phoneNumber) async {
-  final Uri uri = Uri(scheme: 'tel', path: phoneNumber);
-  if (await canLaunch(uri.toString())) {
-    await launch(uri.toString());
-  } else {
-    throw 'Could not launch $phoneNumber';
-  }
-}
