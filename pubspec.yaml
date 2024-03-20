@@ -54,6 +54,9 @@ dependencies:
   speech_to_text: ^6.6.0
   google_sign_in: ^6.2.1
   image_picker: ^1.0.7
+  zego_uikit_prebuilt_call: ^4.4.3
+  flutter_styled_toast: ^2.2.1
+  faker: ^2.1.0
 #  zego_uikit_prebuilt_call: ^4.3.2
 #  zego_uikit_prebuilt_live_streaming: ^3.2.0
 #  zego_uikit_signaling_plugin: ^2.7.6

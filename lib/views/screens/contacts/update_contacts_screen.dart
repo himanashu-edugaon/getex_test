@@ -30,19 +30,32 @@ class _UpdatedContactScreenState extends State<UpdatedContactScreen> {
   late TextEditingController _lastNameController;
   late TextEditingController _middleNameController;
   late TextEditingController _numberController;
-  Uint8List? _images;
-  var contactController = ContactController();
+  Uint8List? _image;
   var appWidgets = AppWidget();
+  var contactController = ContactController();
+
 
   @override
   void initState() {
     super.initState();
 
-    final contact = widget.contacts[widget.index];
-    _firstNameController = TextEditingController(text: contact.name.first);
-    _middleNameController = TextEditingController(text: contact.name.middle);
-    _lastNameController = TextEditingController(text: contact.name.last);
-    _numberController = TextEditingController(text: contact.phones.first.number);
+    // Initialize text controllers
+    _firstNameController = TextEditingController();
+    _middleNameController = TextEditingController();
+    _lastNameController = TextEditingController();
+    _numberController = TextEditingController();
+
+    // Check if the contacts list and phone list are not empty before accessing their elements
+    if (widget.contacts.isNotEmpty && widget.contacts[widget.index].phones.isNotEmpty) {
+      final contact = widget.contacts[widget.index];
+      _firstNameController.text = contact.name.first;
+      _middleNameController.text = contact.name.middle;
+      _lastNameController.text = contact.name.last;
+      _numberController.text = contact.phones.first.number;
+    } else {
+      // Handle the case where the lists are empty
+      // You can display a message or navigate back to a previous screen
+    }
   }
 
   @override
@@ -100,9 +113,9 @@ class _UpdatedContactScreenState extends State<UpdatedContactScreen> {
                 onTap: _pickImage,
                 child: CircleAvatar(
                   radius: 70,
-                  backgroundImage: _images != null || widget.userImage != null
-                      ? MemoryImage(_images ?? widget.userImage!): null,
-                  child: _images == null && widget.userImage == null
+                  backgroundImage: _image != null || widget.userImage != null
+                      ? MemoryImage(_image ?? widget.userImage!): null,
+                  child: _image == null && widget.userImage == null
                       ? const Icon(Icons.add_a_photo_outlined):null,
                 ),
               ),
@@ -118,7 +131,6 @@ class _UpdatedContactScreenState extends State<UpdatedContactScreen> {
     );
   }
 
-
   Future<void> _pickImage() async {
     try {
       final picker = ImagePicker();
@@ -126,7 +138,7 @@ class _UpdatedContactScreenState extends State<UpdatedContactScreen> {
       if (pickedImage != null) {
         final bytes = await pickedImage.readAsBytes();
         setState(() {
-          _images = bytes;
+          _image = bytes;
         });
       }
     } catch (e) {
@@ -136,6 +148,7 @@ class _UpdatedContactScreenState extends State<UpdatedContactScreen> {
       );
     }
   }
+
 
   Future<void> _updateContact() async {
     final updateFirstName = _firstNameController.text.trim();
@@ -149,8 +162,8 @@ class _UpdatedContactScreenState extends State<UpdatedContactScreen> {
       ..name.last = updateLastName
       ..phones.first.number = updateNumber;
 
-    if (_images != null) {
-      updatedContact.photo = _images;
+    if (_image != null) {
+      updatedContact.photo = _image;
     }
 
     try {

@@ -18,37 +18,49 @@ class _GoogleAuthState extends State<GoogleAuth> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text("Google Signing"),
+        title: const Text(""),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        // crossAxisAlignment: CrossAxisAlignment.center,
+      //  mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          Row(
+            children: [
+             SizedBox(height: MediaQuery.of(context).size.height * 0.25,width: MediaQuery.of(context ).size.width * 0.1,),
+              Text("Get Started with calling app",style: TextStyle(fontSize: 20),),
+
+            ],
+          ),
          Material(
             child: Center(
               child: Padding(
-                padding: const EdgeInsets.only(left: 40,right: 40),
-                child: Container(
+                padding: const EdgeInsets.only(left: 30,right: 30,top: 140),
+                child:
+                Container(
                   width: double.infinity,
-                  height: 50,
+                  height: 55,
                   decoration: BoxDecoration(
                     color: Colors.blue,
                     borderRadius: BorderRadius.circular(20.0),
                   ),
-                  child: TextButton.icon(
-                    icon: Image.asset(
-                      'assets/images/google_image.png',
-                      width: 30,
-                      height: 40,
-                    ),
-                    label: const Text(
-                      "Sign in with google",
-                      style: TextStyle(color: Colors.white,fontSize: 20),
-                    ),
-                    onPressed: () {
-                      signInWithGoogle();
-                    },
-                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      TextButton.icon(
+                        icon: Image.asset(
+                          'assets/images/google_image.png',
+                          width: 30,
+                          height: 40,
+                        ),
+                        label: const Text(
+                          "Sign in with google",
+                          style: TextStyle(color: Colors.white,fontSize: 23),
+                        ),
+                        onPressed: () {
+                          signInWithGoogle();
+                        },
+                      ),
+                    ],
+                  )
                 ),
               ),
             ),
